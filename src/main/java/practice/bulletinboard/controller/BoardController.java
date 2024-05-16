@@ -44,8 +44,23 @@ public class BoardController {
     public String viewBoard(@PathVariable Long id, Model model) {
         boardService.updateHits(id);
         BoardDTO boardDTO = boardService.findById(id);
-        model.addAttribute(boardDTO);
+        model.addAttribute("board", boardDTO);
 
+        return "detail";
+    }
+
+    @GetMapping("/update/{id}")
+    public String updateForm(@PathVariable Long id, Model model) {
+        BoardDTO findBoard = boardService.findById(id);
+        model.addAttribute("board", findBoard);
+
+        return "update";
+    }
+
+    @PostMapping("/update")
+    public String update(@ModelAttribute BoardDTO boardDTO, Model model) {
+        BoardDTO board = boardService.update(boardDTO);
+        model.addAttribute("board", board);
         return "detail";
     }
 }

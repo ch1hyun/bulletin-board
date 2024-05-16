@@ -1,9 +1,11 @@
 package practice.bulletinboard.service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import practice.bulletinboard.dto.BoardDTO;
 import practice.bulletinboard.entity.Board;
 import practice.bulletinboard.repository.BoardRepository;
@@ -25,11 +27,25 @@ public class BoardService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional
     public void updateHits(Long id) {
         boardRepository.updateHits(id);
     }
 
     public BoardDTO findById(Long id) {
-        return BoardDTO.toBoardDTO(boardRepository.findById(id));
+        Optional<Board> findBoard = boardRepository.findById(id);
+        if (findBoard.isPresent()) {
+            return BoardDTO.toBoardDTO(findBoard.get());
+        }
+
+        return null;
+    }
+
+    public BoardDTO update(BoardDTO boardDTO) {
+        boardRepository.save(
+                Board.toUpdateEntity(boardDTO)
+        );
+
+        return findById(boardDTO.getId());
     }
 }
