@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import practice.bulletinboard.entity.Board;
 
 @Getter
 @Setter
@@ -22,4 +23,18 @@ public class BoardDTO {
     private int boardHits;
     private LocalDateTime boardCreatedTime;
     private LocalDateTime boardUpdatedTime;
+
+    public static BoardDTO toBoardDTO(Board board) {
+        BoardDTO boardDTO = new BoardDTO();
+        boardDTO.id = board.getId();
+        boardDTO.boardWriter = board.getBoardWriter();
+        boardDTO.boardPass = board.getBoardPass();
+        boardDTO.boardTitle = board.getBoardTitle();
+        boardDTO.boardContents = board.getBoardContents();
+        boardDTO.boardHits = board.getBoardHits();
+        boardDTO.boardCreatedTime = board.getCreatedTime();
+        boardDTO.boardUpdatedTime = board.getUpdatedTime();
+
+        return boardDTO;
+    }
 }
