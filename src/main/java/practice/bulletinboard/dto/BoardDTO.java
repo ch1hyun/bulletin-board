@@ -37,4 +37,15 @@ public class BoardDTO {
 
         return boardDTO;
     }
+
+    public static BoardDTO toPageBoardDTO(Board board) {
+        BoardDTO boardDTO = new BoardDTO();
+        boardDTO.id = board.getId();
+        boardDTO.boardWriter = board.getBoardWriter();
+        boardDTO.boardTitle = board.getBoardTitle();
+        boardDTO.boardHits = board.getBoardHits();
+        boardDTO.boardCreatedTime = board.getCreatedTime();
+
+        return boardDTO;
+    }
 }

@@ -81,7 +81,7 @@
   //     data: {
   //       "commentWriter": writer,
   //       "commentContents": contents,
-  //       "boardId": id
+  //       "boardId": iㅠd
   //     },
   //     success: function (res) {
   //       console.log("요청성공", res);
@@ -111,9 +111,8 @@
   // }
   const listReq = () => {
     console.log("목록 요청");
-    // const page = [[${page}]];
-    // location.href = "/board/paging?page="+page;
-    location.href = "/board/";
+    const page = [[${page}]];
+    location.href = "/board/paging?page="+page;
   }
   const updateReq = () => {
     console.log("수정 요청");
