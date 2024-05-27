@@ -1,5 +1,7 @@
 package practice.bulletinboard.service;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -11,6 +13,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 import practice.bulletinboard.dto.BoardDTO;
 import practice.bulletinboard.entity.Board;
 import practice.bulletinboard.repository.BoardRepository;
@@ -21,9 +24,25 @@ public class BoardService {
 
     private final BoardRepository boardRepository;
 
-    public void save(BoardDTO boardDTO) {
-        Board board = Board.toSaveEntity(boardDTO);
-        boardRepository.save(board);
+    public void save(BoardDTO boardDTO) throws IOException {
+        // 파일 첨부 여부에 따른 로직 분리
+        if (boardDTO.getBoardFile().isEmpty()) {
+            // 첨부 파일 없음.
+            boardRepository.save(Board.toSaveEntity(boardDTO));
+        } else {
+            // 첨부 파일 있음.
+            /*
+                1. DTO에 담김 파일을 꺼냄.
+                2. 파일의 이름 가져옴.
+                3. 서버 저장용 이름을 만듦
+                4. 저장 경로 설정
+                5. 해당 경로에 파일 저장
+                6. board_table에 해당 데이터 save 처리
+                7. board_file_table에 해당 데이터 save 처리
+             */
+
+            boardRepository.save(Board.toSaveFileEntity(boardDTO));
+        }
     }
 
     public List<BoardDTO> findAll() {
