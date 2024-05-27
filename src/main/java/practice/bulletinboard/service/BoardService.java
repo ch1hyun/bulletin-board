@@ -45,6 +45,7 @@ public class BoardService {
         }
     }
 
+    @Transactional
     public List<BoardDTO> findAll() {
         return boardRepository.findAll().stream()
                 .map(BoardDTO::toBoardDTO)
@@ -56,6 +57,7 @@ public class BoardService {
         boardRepository.updateHits(id);
     }
 
+    @Transactional
     public BoardDTO findById(Long id) {
         Optional<Board> findBoard = boardRepository.findById(id);
         if (findBoard.isPresent()) {

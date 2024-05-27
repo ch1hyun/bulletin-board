@@ -40,6 +40,12 @@ public class BoardDTO {
         boardDTO.boardHits = board.getBoardHits();
         boardDTO.boardCreatedTime = board.getCreatedTime();
         boardDTO.boardUpdatedTime = board.getUpdatedTime();
+        boardDTO.fileAttached = board.getFileAttached();
+
+        if (boardDTO.fileAttached == 1) {
+            boardDTO.originalFileName = board.getBoardFiles().get(0).getOriginalFileName();
+            boardDTO.storedFileName = board.getBoardFiles().get(0).getStoredFileName();
+        }
 
         return boardDTO;
     }
