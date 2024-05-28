@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import practice.bulletinboard.dto.BoardDTO;
+import practice.bulletinboard.dto.CommentDTO;
 import practice.bulletinboard.service.BoardService;
+import practice.bulletinboard.service.CommentService;
 
 @Controller
 @RequestMapping("/board")
@@ -23,6 +25,7 @@ import practice.bulletinboard.service.BoardService;
 public class BoardController {
 
     private final BoardService boardService;
+    private final CommentService commentService;
 
     @GetMapping("/")
     public String findAll(Model model) {
@@ -49,7 +52,9 @@ public class BoardController {
                             @PageableDefault(page = 1) Pageable pageable) {
         boardService.updateHits(id);
         BoardDTO boardDTO = boardService.findById(id);
+        List<CommentDTO> commentDTOs = commentService.findAll(id);
         model.addAttribute("board", boardDTO);
+        model.addAttribute("commentList", commentDTOs);
         model.addAttribute("page", pageable.getPageNumber());
 
         return "detail";
@@ -64,7 +69,7 @@ public class BoardController {
     }
 
     @PostMapping("/update")
-    public String update(@ModelAttribute BoardDTO boardDTO, Model model) {
+    public String update(@ModelAttribute BoardDTO boardDTO, Model model) throws IOException {
         BoardDTO board = boardService.update(boardDTO);
         model.addAttribute("board", board);
         return "detail";

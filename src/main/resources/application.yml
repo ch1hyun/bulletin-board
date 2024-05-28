@@ -20,3 +20,6 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: create
+    properties:
+      hibernate:
+        default_batch_fetch_size: 50

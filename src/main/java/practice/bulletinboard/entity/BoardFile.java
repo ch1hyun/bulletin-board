@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class BoardFile extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "board_file_id")
     private Long id;
 
     @Column

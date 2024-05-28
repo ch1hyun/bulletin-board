@@ -24,9 +24,10 @@ public class BoardService {
 
     private final BoardRepository boardRepository;
 
+    @Transactional
     public void save(BoardDTO boardDTO) throws IOException {
         // 파일 첨부 여부에 따른 로직 분리
-        if (boardDTO.getBoardFile().isEmpty()) {
+        if (boardDTO.getBoardFiles().isEmpty()) {
             // 첨부 파일 없음.
             boardRepository.save(Board.toSaveEntity(boardDTO));
         } else {
@@ -67,7 +68,7 @@ public class BoardService {
         return null;
     }
 
-    public BoardDTO update(BoardDTO boardDTO) {
+    public BoardDTO update(BoardDTO boardDTO) throws IOException {
         boardRepository.save(
                 Board.toUpdateEntity(boardDTO)
         );
